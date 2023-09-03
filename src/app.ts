@@ -7,6 +7,8 @@ import express from "express";
 import http from "http";
 import mongoose from "mongoose";
 
+import atcoderCount from "../routers/atcoderCount";
+
 const app = express();
 const PORT: string = process.env.PORT;
 const MONGO_URL: string = process.env.MONGODB_CONNECTION_STRING;
@@ -32,3 +34,5 @@ mongoose.connect(MONGO_URL);
 mongoose.connection.on("error", (error: Error) => {
     console.log(error);
 });
+
+app.use("/atcoder", atcoderCount);
