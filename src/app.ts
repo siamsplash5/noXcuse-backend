@@ -7,7 +7,9 @@ import express from "express";
 import http from "http";
 import mongoose from "mongoose";
 
-import atcoderCount from "../routers/atcoderCount";
+import atcoderCount from "./routers/atcoderCount";
+import codeforcesCount from "./routers/codeforcesCount";
+import leetcodeCount from "./routers/leetcodeCount";
 
 const app = express();
 const PORT: string = process.env.PORT;
@@ -36,3 +38,5 @@ mongoose.connection.on("error", (error: Error) => {
 });
 
 app.use("/atcoder", atcoderCount);
+app.use("/leetcode", leetcodeCount);
+app.use("/codeforces", codeforcesCount);
