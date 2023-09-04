@@ -11,6 +11,8 @@ import atcoderCount from "./routers/atcoderCount";
 import beecrowdCount from "./routers/beecrowdCount";
 import codechefCount from "./routers/codechefCount";
 import codeforcesCount from "./routers/codeforcesCount";
+import csesCount from "./routers/csesCount";
+import hackerearthCount from "./routers/hackerearthCount";
 import leetcodeCount from "./routers/leetcodeCount";
 import spojCount from "./routers/spojCount";
 import timusCount from "./routers/timusCount";
@@ -46,6 +48,8 @@ app.use("/api/atcoder", atcoderCount);
 app.use("/api/beecrowd", beecrowdCount);
 app.use("/api/codechef", codechefCount);
 app.use("/api/codeforces", codeforcesCount);
+app.use("/api/cses", csesCount);
+app.use("/api/hackerearth", hackerearthCount)
 app.use("/api/leetcode", leetcodeCount);
 app.use("/api/spoj", spojCount);
 app.use("/api/timus", timusCount);
