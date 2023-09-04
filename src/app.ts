@@ -8,6 +8,8 @@ import http from "http";
 import mongoose from "mongoose";
 
 import atcoderCount from "./routers/atcoderCount";
+import beecrowdCount from "./routers/beecrowdCount";
+import codechefCount from "./routers/codechefCount";
 import codeforcesCount from "./routers/codeforcesCount";
 import leetcodeCount from "./routers/leetcodeCount";
 
@@ -38,5 +40,7 @@ mongoose.connection.on("error", (error: Error) => {
 });
 
 app.use("/atcoder", atcoderCount);
-app.use("/leetcode", leetcodeCount);
+app.use("/beecrowd", beecrowdCount);
+app.use("/codechef", codechefCount);
 app.use("/codeforces", codeforcesCount);
+app.use("/leetcode", leetcodeCount);

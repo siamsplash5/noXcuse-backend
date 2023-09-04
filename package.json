@@ -42,6 +42,8 @@
         "http": "^0.0.1-security",
         "mongoose": "^7.5.0",
         "puppeteer": "^21.1.1",
-        "puppeteer-core": "6.0.0"
+        "puppeteer-core": "6.0.0",
+        "puppeteer-extra": "^3.3.6",
+        "puppeteer-extra-plugin-stealth": "^2.11.2"
     }
 }
