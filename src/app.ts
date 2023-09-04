@@ -17,6 +17,7 @@ import leetcodeCount from "./routers/leetcodeCount";
 import spojCount from "./routers/spojCount";
 import timusCount from "./routers/timusCount";
 import uvaCount from "./routers/uvaCount";
+import tophCount from "./routers/tophCount";
 
 const app = express();
 const PORT: string = process.env.PORT;
@@ -53,4 +54,5 @@ app.use("/api/hackerearth", hackerearthCount)
 app.use("/api/leetcode", leetcodeCount);
 app.use("/api/spoj", spojCount);
 app.use("/api/timus", timusCount);
+app.use("/api/toph", tophCount);
 app.use("/api/uva", uvaCount);
