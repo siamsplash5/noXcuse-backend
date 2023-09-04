@@ -1,5 +1,6 @@
+import axios from "axios";
+import {load} from "cheerio";
 import express, { Request, Response } from "express";
-import puppeteer from "puppeteer";
 import responseHandler from "../handlers/response.handler";
 
 const timusCount = express.Router();
@@ -7,28 +8,11 @@ const timusCount = express.Router();
 timusCount.get("/count/total/:userId", async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
-        const URL: string = `https://acm.timus.ru/author.aspx?id=${userId}`;
-        const xPath: string = `/html/body/table/tbody/tr[3]/td/table/tbody/tr/td/table[1]/tbody/tr[2]/td[2]`;
+        const profileURL: string = `https://acm.timus.ru/author.aspx?id=${userId}`;
 
-        // Launch Puppeteer browser and go to the URL
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(URL);
-
-        // Handle invalid username cases
-        if (page.url() !== URL) {
-            console.log("Invalid username");
-            throw new Error();
-        }
-
-        await page.waitForXPath(xPath, { timeout: 10000 });
-        const [el] = await page.$x(xPath);
-
-        // Get the text content of the element
-        const txtHandle = await el.getProperty("textContent");
-        const rawTxt: string = await txtHandle.jsonValue();
-
-        await browser.close();
+        const {data: html} = await axios.get(profileURL);
+        const $ = load(html);
+        const rawTxt = $("td.author_stats_value").eq(1).text();
 
         // Convert the text like "506 out of 2495" into number 506
         const regex = /(\d+)\s+out\s+of\s+(\d+)/;
