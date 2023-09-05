@@ -14,10 +14,11 @@ import codeforcesCount from "./routers/codeforcesCount";
 import csesCount from "./routers/csesCount";
 import hackerearthCount from "./routers/hackerearthCount";
 import leetcodeCount from "./routers/leetcodeCount";
+import lightojCount from "./routers/lightojCount";
 import spojCount from "./routers/spojCount";
 import timusCount from "./routers/timusCount";
-import uvaCount from "./routers/uvaCount";
 import tophCount from "./routers/tophCount";
+import uvaCount from "./routers/uvaCount";
 
 const app = express();
 const PORT: string = process.env.PORT;
@@ -50,7 +51,8 @@ app.use("/api/beecrowd", beecrowdCount);
 app.use("/api/codechef", codechefCount);
 app.use("/api/codeforces", codeforcesCount);
 app.use("/api/cses", csesCount);
-app.use("/api/hackerearth", hackerearthCount)
+app.use("/api/hackerearth", hackerearthCount);
+app.use("/api/lightoj", lightojCount);
 app.use("/api/leetcode", leetcodeCount);
 app.use("/api/spoj", spojCount);
 app.use("/api/timus", timusCount);
