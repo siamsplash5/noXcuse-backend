@@ -19,6 +19,8 @@ import timusCount from "./routers/timusCount";
 import tophCount from "./routers/tophCount";
 import uvaCount from "./routers/uvaCount";
 
+import totalCount from "./routers/totalCount";
+
 const app = express();
 const PORT: string = process.env.PORT;
 const MONGO_URL: string = process.env.MONGODB_CONNECTION_STRING;
@@ -56,3 +58,5 @@ app.use("/api/spoj", spojCount);
 app.use("/api/timus", timusCount);
 app.use("/api/toph", tophCount);
 app.use("/api/uva", uvaCount);
+
+app.use("/api/solve/total", totalCount);
