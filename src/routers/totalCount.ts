@@ -1,13 +1,26 @@
 import axios from "axios";
 import express, { Request, Response } from "express";
+import { getUserByUsername } from "../models/userModel";
+import { UserDB } from "../types/User";
 import responseHandler from "../handlers/response.handler";
-import { SolveCount } from "types/User";
 
 const totalCount = express.Router();
 
-function sleep(milliseconds: number) {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-}
+const domain: string = "http://localhost:8080/api";
+
+const apiList = [
+    `${domain}/atcoder/count/total`,
+    `${domain}/beecrowd/count/total`,
+    `${domain}/codechef/count/total`,
+    `${domain}/codeforces/count/total`,
+    `${domain}/cses/count/total`,
+    `${domain}/leetcode/count/total`,
+    `${domain}/lightoj/count/total`,
+    `${domain}/spoj/count/total`,
+    `${domain}/timus/count/total`,
+    `${domain}/toph/count/total`,
+    `${domain}/uva/count/total`,
+];
 
 const judgeList = [
     "atcoder",
@@ -23,30 +36,43 @@ const judgeList = [
     "uva",
 ];
 
+
 totalCount.get("/:username", async (req: Request, res: Response) => {
     try {
-        const solveStats: SolveCount = {};
-        const onlineJudgeHandles: string[] = [];
+        const { username } = req.params;
 
-       
+        //get the user handle for all online judges
+        const user: UserDB = await getUserByUsername(username);
+        
+        const handleList: string[] = [
+            user.atcoderHandle,
+            user.beecrowdHandle,
+            user.codechefHandle,
+            user.codeforcesHandle,
+            user.csesHandle,
+            user.leetcodeHandle,
+            user.lightojHandle,
+            user.spojHandle,
+            user.timusHandle,
+            user.tophHandle,
+            user.uvaHandle,
+        ];
 
-        let totalSolve: number = 0;
+        const solveStats: {
+            [key: string]: number | undefined; 
+        } = {};
 
-        // Use Promise.all to await all async requests
-        const requests = onlineJudgeHandles.map(
-            async (handle: string, index: number) => {
-                if (handle.length) {
-                    const url: string = `http://localhost:8080/api/${judgeList[index]}/count/total/${handle}`;
-                    console.log(url);
-                    const { data: response } = await axios.get(url);
-                    solveStats[judgeList[index] as keyof SolveCount] =
-                        response.data.totalSolved;
-                    totalSolve += response.data.totalSolved;
-                }
+        let totalSolve = 0;
+        
+        const requests = apiList.map(async (apiUrl: string, index: number) => {
+            const handle: string = handleList[index];
+            if (handle.length) {
+                const { data: response } = await axios.get(`${apiUrl}/${handle}`);
+                solveStats[judgeList[index]] = response.data.totalSolved;
+                totalSolve += response.data.totalSolved;
             }
-        );
+        });
 
-    
         await Promise.all(requests);
 
         responseHandler.success(res, "", { totalSolve, solveStats });

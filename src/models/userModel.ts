@@ -1,34 +1,6 @@
 import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
-import { User } from "types/User";
-
-const solveCountSchema = new mongoose.Schema({
-    atcoder: { type: Number, default: 0 },
-    beecrowd: { type: Number, default: 0 },
-    codechef: { type: Number, default: 0 },
-    codeforces: { type: Number, default: 0 },
-    cses: { type: Number, default: 0 },
-    leetcode: { type: Number, default: 0 },
-    lightoj: { type: Number, default: 0 },
-    spoj: { type: Number, default: 0 },
-    timus: { type: Number, default: 0 },
-    toph: { type: Number, default: 0 },
-    uva: { type: Number, default: 0 },
-});
-
-const onlineJudgeHandleSchema = new mongoose.Schema({
-    atcoder: { type: String },
-    beecrowd: { type: String },
-    codechef: { type: String },
-    codeforces: { type: String },
-    cses: { type: String },
-    leetcode: { type: String },
-    lightoj: { type: String },
-    spoj: { type: String },
-    timus: { type: String },
-    toph: { type: String },
-    uva: { type: String },
-});
+import { UserDB, User } from "types/User";
 
 const UserSchema = new mongoose.Schema(
     {
@@ -77,11 +49,93 @@ const UserSchema = new mongoose.Schema(
             trim: true,
             default: "",
         },
-        onlineJudgeHandles: {
-            types: onlineJudgeHandleSchema,
+        atcoderHandle: {
+            type: String,
+            default: null,
         },
-        solveCount: {
-            type: solveCountSchema,
+        beecrowdHandle: {
+            type: String,
+            default: null,
+        },
+        codechefHandle: {
+            type: String,
+            default: null,
+        },
+        codeforcesHandle: {
+            type: String,
+            default: null,
+        },
+        csesHandle: {
+            type: String,
+            default: null,
+        },
+        leetcodeHandle: {
+            type: String,
+            default: null,
+        },
+        lightojHandle: {
+            type: String,
+            default: null,
+        },
+        spojHandle: {
+            type: String,
+            default: null,
+        },
+        timusHandle: {
+            type: String,
+            default: null,
+        },
+        tophHandle: {
+            type: String,
+            default: null,
+        },
+        uvaHandle: {
+            type: String,
+            default: null,
+        },
+        atcoderSolve: {
+            type: Number,
+            default: 0,
+        },
+        beecrowdSolve: {
+            type: Number,
+            default: 0,
+        },
+        codechefSolve: {
+            type: Number,
+            default: 0,
+        },
+        codeforcesSolve: {
+            type: Number,
+            default: 0,
+        },
+        csesSolve: {
+            type: Number,
+            default: 0,
+        },
+        leetcodeSolve: {
+            type: Number,
+            default: 0,
+        },
+        lightojSolve: {
+            type: Number,
+            default: 0,
+        },
+        spojSolve: {
+            type: Number,
+            default: 0,
+        },
+        timusSolve: {
+            type: Number,
+            default: 0,
+        },
+        tophSolve: {
+            type: Number,
+            default: 0,
+        },
+        uvaSolve: {
+            type: Number,
+            default: 0,
         },
     },
     { timestamps: true }
@@ -100,15 +154,15 @@ export const createNewUser = async (user: User) => {
     }
 };
 
-export const getUserByUsername = async (username: string) => {
+export const getUserByUsername = async (
+    username: string
+): Promise<UserDB | null> => {
     try {
-        const user = await UserModel.findOne({ username });
-        // user not found
-        if (user === null) return 404;
+        const user: UserDB = await UserModel.findOne({ username });
         return user;
     } catch (error) {
-        console.log(error);
-        return 500;
+        console.error(error);
+        throw new Error("Error while fetching user by username");
     }
 };
 
