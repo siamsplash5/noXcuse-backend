@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import puppeteer from "puppeteer-extra";
 import pluginStealth from "puppeteer-extra-plugin-stealth";
-import responseHandler from "../handlers/response.handler";
+import responseHandler from "../../handlers/response.handler";
 puppeteer.use(pluginStealth());
 
 const codechefCount = express.Router();

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import puppeteer from "puppeteer";
-import responseHandler from "../handlers/response.handler";
+import responseHandler from "../../handlers/response.handler";
 
 const lightojCount = express.Router();
 
@@ -25,7 +25,7 @@ lightojCount.get(
                 throw new Error();
             }
 
-            await page.waitForXPath(xPath, {timeout: 5000});
+            await page.waitForXPath(xPath, { timeout: 5000 });
             const [el] = await page.$x(xPath);
 
             // Get the text content of the element and convert to number

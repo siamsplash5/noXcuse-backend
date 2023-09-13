@@ -7,19 +7,19 @@ import express from "express";
 import http from "http";
 import mongoose from "mongoose";
 
-import atcoderCount from "./routers/atcoderCount";
-import beecrowdCount from "./routers/beecrowdCount";
-import codechefCount from "./routers/codechefCount";
-import codeforcesCount from "./routers/codeforcesCount";
-import csesCount from "./routers/csesCount";
-import leetcodeCount from "./routers/leetcodeCount";
-import lightojCount from "./routers/lightojCount";
-import spojCount from "./routers/spojCount";
-import timusCount from "./routers/timusCount";
-import tophCount from "./routers/tophCount";
-import uvaCount from "./routers/uvaCount";
+import atcoderCount from "./routers/solveCounters/atcoderCount";
+import beecrowdCount from "./routers/solveCounters/beecrowdCount";
+import codechefCount from "./routers/solveCounters/codechefCount";
+import codeforcesCount from "./routers/solveCounters/codeforcesCount";
+import csesCount from "./routers/solveCounters/csesCount";
+import leetcodeCount from "./routers/solveCounters/leetcodeCount";
+import lightojCount from "./routers/solveCounters/lightojCount";
+import spojCount from "./routers/solveCounters/spojCount";
+import timusCount from "./routers/solveCounters/timusCount";
+import tophCount from "./routers/solveCounters/tophCount";
+import uvaCount from "./routers/solveCounters/uvaCount";
 
-import totalCount from "./routers/totalCount";
+import totalCount from "./routers/solveCounters/totalCount";
 
 const app = express();
 const PORT: string = process.env.PORT;

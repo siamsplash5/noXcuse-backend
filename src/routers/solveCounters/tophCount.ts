@@ -1,7 +1,7 @@
 import axios from "axios";
 import { load } from "cheerio";
 import express, { Request, Response } from "express";
-import responseHandler from "../handlers/response.handler";
+import responseHandler from "../../handlers/response.handler";
 
 const tophCount = express.Router();
 
@@ -18,7 +18,7 @@ tophCount.get("/count/total/:username", async (req: Request, res: Response) => {
         // Extract the total solve count and convert it to number
         const totalSolvedTxt: string = $("div.numbers div.value").eq(1).text();
         const totalSolved: number = parseInt(totalSolvedTxt, 10);
-    
+
         responseHandler.success(res, "", { username, totalSolved });
     } catch (error) {
         console.error(error);

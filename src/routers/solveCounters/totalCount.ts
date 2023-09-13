@@ -1,8 +1,8 @@
 import axios from "axios";
 import express, { Request, Response } from "express";
-import { getUserByUsername } from "../models/userModel";
-import { UserDB } from "../types/User";
-import responseHandler from "../handlers/response.handler";
+import responseHandler from "../../handlers/response.handler";
+import { getUserByUsername } from "../../models/userModel";
+import { UserDB } from "../../types/User";
 
 const totalCount = express.Router();
 
@@ -36,6 +36,7 @@ const judgeList = [
     "uva",
 ];
 
+// api route: /api/solve/total/:username
 
 totalCount.get("/:username", async (req: Request, res: Response) => {
     try {
@@ -43,7 +44,7 @@ totalCount.get("/:username", async (req: Request, res: Response) => {
 
         //get the user handle for all online judges
         const user: UserDB = await getUserByUsername(username);
-        
+
         const handleList: string[] = [
             user.atcoderHandle,
             user.beecrowdHandle,
@@ -59,15 +60,17 @@ totalCount.get("/:username", async (req: Request, res: Response) => {
         ];
 
         const solveStats: {
-            [key: string]: number | undefined; 
+            [key: string]: number | undefined;
         } = {};
 
         let totalSolve = 0;
-        
+
         const requests = apiList.map(async (apiUrl: string, index: number) => {
             const handle: string = handleList[index];
             if (handle.length) {
-                const { data: response } = await axios.get(`${apiUrl}/${handle}`);
+                const { data: response } = await axios.get(
+                    `${apiUrl}/${handle}`
+                );
                 solveStats[judgeList[index]] = response.data.totalSolved;
                 totalSolve += response.data.totalSolved;
             }

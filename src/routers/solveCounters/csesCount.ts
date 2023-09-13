@@ -1,7 +1,7 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import express, { Request, Response } from "express";
-import responseHandler from "../handlers/response.handler";
+import responseHandler from "../../handlers/response.handler";
 
 const csesCount = express.Router();
 

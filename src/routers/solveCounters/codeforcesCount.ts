@@ -1,7 +1,7 @@
 import axios from "axios";
 import { load } from "cheerio";
 import express, { Request, Response } from "express";
-import responseHandler from "../handlers/response.handler";
+import responseHandler from "../../handlers/response.handler";
 
 const codeforcesCount = express.Router();
 

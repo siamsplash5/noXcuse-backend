@@ -1,6 +1,6 @@
 import axios from "axios";
 import express, { Request, Response } from "express";
-import responseHandler from "../handlers/response.handler";
+import responseHandler from "../../handlers/response.handler";
 
 const uvaCount = express.Router();
 
