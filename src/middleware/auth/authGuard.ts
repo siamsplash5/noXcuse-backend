@@ -3,6 +3,7 @@ import CustomAuthRequest from "interfaces/CustomAuthRequest";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import { isBlackListed } from "models/blacklistedToken";
 import { AuthTokenType } from "types/AuthTokenType";
+import { UserExistResponse } from "types/UserExistResponseType";
 import responseHandler from "../../handlers/response.handler";
 import { isUserExist } from "../../models/userModel";
 
@@ -59,11 +60,15 @@ const authGuard = async (
         }
 
         // Check if the token's user ID exists in the database
-        let usernameFromDB: string;
+        let usernameFromDB: UserExistResponse;
 
         try {
             // the function will return the username
-            usernameFromDB = await isUserExist(userMongoDBId);
+            usernameFromDB = await isUserExist(
+                userMongoDBId,
+                { byMongoDBId: true },
+                { username: true }
+            );
             if (usernameFromDB === null) {
                 //user doesn't exist
                 return responseHandler.unauthorize(res);

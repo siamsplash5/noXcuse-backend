@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 import { UserDB, User } from "types/User";
+import { UserExistResponse } from "types/UserExistResponseType";
 
 const UserSchema = new mongoose.Schema(
     {
@@ -145,9 +146,10 @@ UserSchema.plugin(uniqueValidator, { message: "is already taken." });
 
 export const UserModel = mongoose.model("User", UserSchema);
 
-export const createNewUser = async (user: User) => {
+export const createNewUser = async (user: User): Promise<UserDB> => {
     try {
-        await UserModel.create(user);
+        const newUser = await UserModel.create(user);
+        return newUser as unknown as UserDB;
     } catch (error) {
         throw new Error("Query failed - createNewUser");
     }
@@ -182,13 +184,49 @@ export const getUserByEmail = async (email: string): Promise<UserDB | null> => {
     }
 };
 
-export const isUserExist = async (id: string) : Promise<string> => {
+export const isUserExist = async (
+    checkingKey: string,
+    filterBy: {
+        byUsername?: boolean;
+        byEmail?: boolean;
+        byMongoDBId?: boolean;
+    },
+    getInfoOf: {
+        username?: boolean;
+        email?: boolean;
+        mongoDBId?: boolean;
+        password?: boolean;
+    }
+): Promise<UserExistResponse> => {
     try {
-        const user = await UserModel.findById({
-            _id: id,
-        }).select("username");
+        const { byUsername, byEmail, byMongoDBId } = filterBy;
+        const { username, email, mongoDBId, password } = getInfoOf;
+        let filter, field: string = "";
 
-        return (user as unknown as string);
+        if (username) {
+            field += "username ";
+        }
+        if (email) {
+            field += "email ";
+        }
+        if (mongoDBId) {
+            field += "_id ";
+        }
+        if (password) {
+            field += "password ";
+        }
+
+        if (byUsername) {
+            filter = { username: checkingKey };
+        } else if (byEmail) {
+            filter = { email: checkingKey };
+        } else if (byMongoDBId) {
+            filter = { _id: checkingKey };
+        }
+
+        const user = await UserModel.findOne(filter).select(field);
+
+        return user as unknown as UserExistResponse;
     } catch (error) {
         throw new Error("Query failed - isUserExist");
     }

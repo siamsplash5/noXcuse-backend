@@ -6,7 +6,6 @@ import "dotenv/config";
 import express from "express";
 import http from "http";
 import mongoose from "mongoose";
-import passport from "passport";
 
 import atcoderCount from "./routers/solveCounters/atcoderCount";
 import beecrowdCount from "./routers/solveCounters/beecrowdCount";
@@ -18,10 +17,12 @@ import lightojCount from "./routers/solveCounters/lightojCount";
 import spojCount from "./routers/solveCounters/spojCount";
 import timusCount from "./routers/solveCounters/timusCount";
 import tophCount from "./routers/solveCounters/tophCount";
-import uvaCount from "./routers/solveCounters/uvaCount";
 import totalCount from "./routers/solveCounters/totalCount";
+import uvaCount from "./routers/solveCounters/uvaCount";
 
 import login from "./routers/authentication/login";
+
+import testRouter from "./routers/test/testRouter";
 
 const app = express();
 const PORT: string = process.env.PORT;
@@ -29,7 +30,7 @@ const MONGO_URL: string = process.env.MONGODB_CONNECTION_STRING;
 
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: "http://localhost:5173",
         credentials: true,
     })
 );
@@ -37,8 +38,6 @@ app.use(
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(passport.initialize());
-
 
 const server = http.createServer(app);
 
@@ -65,6 +64,6 @@ app.use("/api/toph", tophCount);
 app.use("/api/uva", uvaCount);
 app.use("/api/solve/total", totalCount);
 
-
 app.use("/api/login", login);
 
+app.use("/api/test", testRouter);
