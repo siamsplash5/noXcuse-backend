@@ -149,8 +149,7 @@ export const createNewUser = async (user: User) => {
     try {
         await UserModel.create(user);
     } catch (error) {
-        console.error(error);
-        throw new Error("Error when creating a new User");
+        throw new Error("Query failed - createNewUser");
     }
 };
 
@@ -161,63 +160,68 @@ export const getUserByUsername = async (
         const user: UserDB = await UserModel.findOne({ username });
         return user;
     } catch (error) {
-        console.error(error);
-        throw new Error("Error while fetching user by username");
+        throw new Error("Query failed - getUserByUsername");
     }
 };
 
-export const getUserById = async (id: string) => {
+export const getUserById = async (id: string): Promise<UserDB | null> => {
     try {
-        const user = await UserModel.findById({ _id: id });
-        // user not found
-        if (user === null) return 404;
+        const user: UserDB = await UserModel.findById({ _id: id });
         return user;
     } catch (error) {
-        console.log(error);
-        return 500;
+        throw new Error("Query failed - getUserById");
     }
 };
 
-export const getUserByEmail = async (email: string) => {
+export const getUserByEmail = async (email: string): Promise<UserDB | null> => {
     try {
-        const user = await UserModel.findOne({ email });
-        // user not found
-        if (user === null) return 404;
+        const user: UserDB = await UserModel.findOne({ email });
         return user;
     } catch (error) {
-        console.log(error);
-        return 500;
+        throw new Error("Query failed - getUserByEmail");
     }
 };
 
-export const updateUser = async (username: string, updatedInfo: unknown) => {
+export const isUserExist = async (id: string) : Promise<string> => {
     try {
-        const filter = { username };
-        const update = updatedInfo;
-        const updatedUserData = await UserModel.findOneAndUpdate(
-            filter,
-            update,
-            { new: true }
-        );
-        // user not found
-        if (updatedUserData === null) return 404;
-        // user has found, return the updated document
-        return updatedUserData;
+        const user = await UserModel.findById({
+            _id: id,
+        }).select("username");
+
+        return (user as unknown as string);
     } catch (error) {
-        console.log(error);
-        return 500;
+        throw new Error("Query failed - isUserExist");
     }
 };
 
-export const deleteUser = async (username: string) => {
-    try {
-        const deletedUserData = await UserModel.findOneAndDelete({ username });
-        // user not found
-        if (deletedUserData === null) return 404;
-        // user found and deleted, return the data of deleted document
-        return deletedUserData;
-    } catch (error) {
-        console.log(error);
-        return 500;
-    }
-};
+// export const updateUser = async (username: string, updatedInfo: unknown) => {
+//     try {
+//         const filter = { username };
+//         const update = updatedInfo;
+//         const updatedUserData = await UserModel.findOneAndUpdate(
+//             filter,
+//             update,
+//             { new: true }
+//         );
+//         // user not found
+//         if (updatedUserData === null) return 404;
+//         // user has found, return the updated document
+//         return updatedUserData;
+//     } catch (error) {
+//         console.log(error);
+//         return 500;
+//     }
+// };
+
+// export const deleteUser = async (username: string) => {
+//     try {
+//         const deletedUserData = await UserModel.findOneAndDelete({ username });
+//         // user not found
+//         if (deletedUserData === null) return 404;
+//         // user found and deleted, return the data of deleted document
+//         return deletedUserData;
+//     } catch (error) {
+//         console.log(error);
+//         return 500;
+//     }
+// };

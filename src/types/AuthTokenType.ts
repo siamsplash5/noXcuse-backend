@@ -1,0 +1,1 @@
+export type AuthTokenType = {userMongoDBId: string, username: string}
