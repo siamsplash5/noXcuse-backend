@@ -16,7 +16,7 @@ const BLTokenSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export const BLTokenModel = mongoose.model("BlackListedToken", BLTokenSchema);
+const BLTokenModel = mongoose.model("BlackListedToken", BLTokenSchema);
 
 export const isBlackListed = async (jwtToken: string): Promise<string> => {
     try {

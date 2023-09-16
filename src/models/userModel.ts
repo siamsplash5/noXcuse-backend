@@ -144,7 +144,7 @@ const UserSchema = new mongoose.Schema(
 
 UserSchema.plugin(uniqueValidator, { message: "is already taken." });
 
-export const UserModel = mongoose.model("User", UserSchema);
+const UserModel = mongoose.model("User", UserSchema);
 
 export const createNewUser = async (user: User): Promise<UserDB> => {
     try {

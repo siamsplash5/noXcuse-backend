@@ -35,7 +35,7 @@ const otpStorageSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export const OtpStorageModel = mongoose.model("OtpStorage", otpStorageSchema);
+const OtpStorageModel = mongoose.model("OtpStorage", otpStorageSchema);
 
 export const storeNewOtp = async (
     otpObject: OtpObjectType
