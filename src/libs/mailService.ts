@@ -73,7 +73,7 @@ export const sendRegistrationVerifyMail = async (
                 competitive programmers</strong>. To confirm your registration, enter
             the following code on the verification page:</p>
         <p><strong>OTP: <span class="code">${otp}</span></strong></p>
-        <p>This code valid for 1 hour.</p>
+        <p>This code is valid for 1 hour.</p>
         <p>Thank you for choosing noXcuse. If it was not you, just ignore this email.</p>
         <p class="signature">With best regards,<br><strong>noXcuse Team</strong></p>
     </div>
