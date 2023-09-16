@@ -20,7 +20,8 @@ import tophCount from "./routers/solveCounters/tophCount";
 import totalCount from "./routers/solveCounters/totalCount";
 import uvaCount from "./routers/solveCounters/uvaCount";
 
-import login from "./routers/authentication/login";
+import loginRouter from "./routers/authentication/login";
+import registerRouter from "./routers/authentication/registration";
 
 import testRouter from "./routers/test/testRouter";
 
@@ -64,6 +65,7 @@ app.use("/api/toph", tophCount);
 app.use("/api/uva", uvaCount);
 app.use("/api/solve/total", totalCount);
 
-app.use("/api/login", login);
+app.use("/api/login", loginRouter);
+app.use("/api/register", registerRouter);
 
 app.use("/api/test", testRouter);
