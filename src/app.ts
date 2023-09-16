@@ -21,6 +21,7 @@ import totalCount from "./routers/solveCounters/totalCount";
 import uvaCount from "./routers/solveCounters/uvaCount";
 
 import loginRouter from "./routers/authentication/login";
+import verificationRouter from "./routers/authentication/otpVerify";
 import registerRouter from "./routers/authentication/registration";
 
 import testRouter from "./routers/test/testRouter";
@@ -67,5 +68,6 @@ app.use("/api/solve/total", totalCount);
 
 app.use("/api/login", loginRouter);
 app.use("/api/register", registerRouter);
+app.use("api/verify", verificationRouter);
 
 app.use("/api/test", testRouter);

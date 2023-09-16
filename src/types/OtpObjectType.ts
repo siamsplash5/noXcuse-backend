@@ -3,4 +3,5 @@ export type OtpObjectType = {
     username: string;
     email?: string;
     password?: string;
+    expiresAt?: number;
 };
